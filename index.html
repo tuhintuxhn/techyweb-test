@@ -26,16 +26,17 @@
         <p>Sign in to manage your modules and services.</p>
       </div>
 
-      <form class="login-form" autocomplete="off">
+      <!-- LOGIN FORM -->
+      <form class="login-form" id="loginForm" autocomplete="off">
 
         <div class="field">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" placeholder="john@doe.com">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" name="email" placeholder="john@doe.com" required>
         </div>
 
         <div class="field">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="******">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" name="password" placeholder="******" required>
         </div>
 
         <div class="field-row">
@@ -48,9 +49,37 @@
           <a href="#" class="link-forgot">Forgot Password?</a>
         </div>
 
-        <button type="submit" class="btn-login">Login to Dashboard</button>
+        <button type="submit" class="btn-login" id="loginBtn">Login to Dashboard</button>
 
-        <a href="#" class="link-register">Or Register</a>
+        <p id="loginStatus" class="form-status" aria-live="polite"></p>
+
+        <a href="#" class="link-register" id="showRegister">Or Register</a>
+
+      </form>
+
+      <!-- REGISTER FORM (hidden by default) -->
+      <form class="login-form" id="registerForm" autocomplete="off" hidden>
+
+        <div class="field">
+          <label for="registerName">Full Name</label>
+          <input type="text" id="registerName" name="name" placeholder="Jane Doe" required>
+        </div>
+
+        <div class="field">
+          <label for="registerEmail">Email Address</label>
+          <input type="email" id="registerEmail" name="email" placeholder="john@doe.com" required>
+        </div>
+
+        <div class="field">
+          <label for="registerPassword">Password</label>
+          <input type="password" id="registerPassword" name="password" placeholder="At least 6 characters" required>
+        </div>
+
+        <button type="submit" class="btn-login" id="registerBtn">Create Account</button>
+
+        <p id="registerStatus" class="form-status" aria-live="polite"></p>
+
+        <a href="#" class="link-register" id="showLogin">Back to Login</a>
 
       </form>
     </div>
@@ -160,5 +189,130 @@
 
 </div>
 
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc
+  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+  // 1. PASTE YOUR OWN FIREBASE CONFIG HERE (see setup guide)
+  const firebaseConfig = {
+    apiKey: "AIzaSyCjyOBUgNSmyr7KKRGv8ba6sFmXu3wfsFY",
+    authDomain: "vault-login-61bc9.firebaseapp.com",
+    projectId: "vault-login-61bc9",
+    storageBucket: "vault-login-61bc9.firebasestorage.app",
+    messagingSenderId: "7939979852",
+    appId: "1:7939979852:web:826cba9fba972c07bdd2e9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // ----- Element references -----
+  const loginForm = document.getElementById("loginForm");
+  const registerForm = document.getElementById("registerForm");
+  const showRegister = document.getElementById("showRegister");
+  const showLogin = document.getElementById("showLogin");
+  const loginStatus = document.getElementById("loginStatus");
+  const registerStatus = document.getElementById("registerStatus");
+  const loginBtn = document.getElementById("loginBtn");
+  const registerBtn = document.getElementById("registerBtn");
+
+  // ----- Toggle between Login / Register -----
+  showRegister.addEventListener("click", function (e) {
+    e.preventDefault();
+    loginForm.hidden = true;
+    registerForm.hidden = false;
+  });
+
+  showLogin.addEventListener("click", function (e) {
+    e.preventDefault();
+    registerForm.hidden = true;
+    loginForm.hidden = false;
+  });
+
+  // ----- Register -----
+  registerForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("registerName").value.trim();
+    const email = document.getElementById("registerEmail").value.trim();
+    const password = document.getElementById("registerPassword").value;
+
+    registerBtn.disabled = true;
+    registerBtn.textContent = "Creating account...";
+    registerStatus.textContent = "";
+    registerStatus.className = "form-status";
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(function (result) {
+        return updateProfile(result.user, { displayName: name }).then(function () {
+          // Store name + email in Firestore, keyed by the user's unique ID.
+          // Password is NEVER stored here — Firebase Auth handles it securely on its own.
+          return setDoc(doc(db, "users", result.user.uid), {
+            name: name,
+            email: email,
+            createdAt: new Date().toISOString()
+          });
+        });
+      })
+      .then(function () {
+        registerStatus.textContent = "Account created! You can now log in.";
+        registerStatus.classList.add("form-status--ok");
+        registerForm.reset();
+        setTimeout(function () {
+          registerForm.hidden = true;
+          loginForm.hidden = false;
+        }, 1200);
+      })
+      .catch(function (error) {
+        registerStatus.textContent = error.message.replace("Firebase: ", "");
+        registerStatus.classList.add("form-status--error");
+      })
+      .finally(function () {
+        registerBtn.disabled = false;
+        registerBtn.textContent = "Create Account";
+      });
+  });
+
+  // ----- Login -----
+  loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Logging in...";
+    loginStatus.textContent = "";
+    loginStatus.className = "form-status";
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(function (result) {
+        loginStatus.textContent = "Welcome back, " + (result.user.displayName || "there") + "!";
+        loginStatus.classList.add("form-status--ok");
+        // Redirect to your dashboard page here, e.g.:
+        // window.location.href = "dashboard.html";
+      })
+      .catch(function (error) {
+        loginStatus.textContent = error.message.replace("Firebase: ", "");
+        loginStatus.classList.add("form-status--error");
+      })
+      .finally(function () {
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Login to Dashboard";
+      });
+  });
+</script>
 </body>
 </html>
