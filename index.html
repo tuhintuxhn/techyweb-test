@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StampReady Vault — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page">
+
+  <!-- LEFT COLUMN — LOGIN -->
+  <section class="panel panel--login">
+    <div class="login-inner">
+
+      <div class="logo">
+        <span class="logo__mark" aria-hidden="true">S</span>
+        <span class="logo__word">Vault</span>
+      </div>
+
+      <div class="login-head">
+        <h1>Welcome back</h1>
+        <p>Sign in to manage your modules and services.</p>
+      </div>
+
+      <form class="login-form" autocomplete="off">
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="john@doe.com">
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="******">
+        </div>
+
+        <div class="field-row">
+          <label class="checkbox">
+            <input type="checkbox" id="remember" name="remember">
+            <span class="checkbox__box" aria-hidden="true"></span>
+            <span class="checkbox__label">Remember Me</span>
+          </label>
+
+          <a href="#" class="link-forgot">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn-login">Login to Dashboard</button>
+
+        <a href="#" class="link-register">Or Register</a>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- RIGHT COLUMN — BRAND / ILLUSTRATION -->
+  <section class="panel panel--brand">
+    <div class="brand-inner">
+
+      <div class="brand-copy">
+        <h2>STAMPREADY<br>VAULT</h2>
+        <p>Select from hundreds of premium modules. Plans start from $9.5 per month.</p>
+      </div>
+
+      <div class="illustration" aria-hidden="true">
+
+        <!-- floating micro-icon cubes -->
+        <svg class="cube cube--1" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,0 100,29 50,58 0,29" class="cube__top"/>
+          <polygon points="0,29 50,58 50,116 0,87" class="cube__left"/>
+          <polygon points="100,29 50,58 50,116 100,87" class="cube__right"/>
+          <g class="cube__icon" transform="translate(50,45)">
+            <path d="M-9,-2 L-3,-8 L3,-8 L9,-2 M-9,-2 L-9,4 L9,4 L9,-2 M-9,4 L-3,10 L3,10 L9,4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+          </g>
+        </svg>
+
+        <svg class="cube cube--2" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,0 100,29 50,58 0,29" class="cube__top"/>
+          <polygon points="0,29 50,58 50,116 0,87" class="cube__left"/>
+          <polygon points="100,29 50,58 50,116 100,87" class="cube__right"/>
+          <g class="cube__icon" transform="translate(50,45)">
+            <circle cx="0" cy="0" r="6" fill="none" stroke="#fff" stroke-width="2.4"/>
+            <path d="M0,-9 L0,-6 M0,6 L0,9 M-9,0 L-6,0 M6,0 L9,0" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+          </g>
+        </svg>
+
+        <svg class="cube cube--3" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,0 100,29 50,58 0,29" class="cube__top"/>
+          <polygon points="0,29 50,58 50,116 0,87" class="cube__left"/>
+          <polygon points="100,29 50,58 50,116 100,87" class="cube__right"/>
+          <g class="cube__icon" transform="translate(50,45)">
+            <rect x="-8" y="-8" width="7" height="7" fill="none" stroke="#fff" stroke-width="2.2"/>
+            <rect x="1" y="-8" width="7" height="7" fill="none" stroke="#fff" stroke-width="2.2"/>
+            <rect x="-8" y="1" width="7" height="7" fill="none" stroke="#fff" stroke-width="2.2"/>
+            <rect x="1" y="1" width="7" height="7" fill="none" stroke="#fff" stroke-width="2.2"/>
+          </g>
+        </svg>
+
+        <svg class="cube cube--4" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,0 100,29 50,58 0,29" class="cube__top"/>
+          <polygon points="0,29 50,58 50,116 0,87" class="cube__left"/>
+          <polygon points="100,29 50,58 50,116 100,87" class="cube__right"/>
+          <g class="cube__icon" transform="translate(50,45)">
+            <path d="M-8,7 L-2,-7 L4,-7 L-2,3 L2,3 L-4,9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+          </g>
+        </svg>
+
+        <!-- isometric robot -->
+        <svg class="robot" viewBox="0 0 320 340" xmlns="http://www.w3.org/2000/svg">
+
+          <!-- ground shadow -->
+          <ellipse cx="160" cy="316" rx="92" ry="16" class="robot__shadow"/>
+
+          <!-- antenna -->
+          <line x1="160" y1="46" x2="160" y2="18" class="robot__stroke"/>
+          <circle cx="160" cy="12" r="7" class="robot__accent-fill"/>
+
+          <!-- head block (isometric cube) -->
+          <polygon points="160,40 208,64 160,88 112,64" class="robot__top"/>
+          <polygon points="112,64 160,88 160,150 112,126" class="robot__left"/>
+          <polygon points="208,64 160,88 160,150 208,126" class="robot__right"/>
+
+          <!-- screen face on head front-right facet -->
+          <polygon points="120,72 154,90 154,140 120,122" class="robot__face"/>
+          <circle cx="132" cy="98" r="4.2" class="robot__eye"/>
+          <circle cx="144" cy="104" r="4.2" class="robot__eye"/>
+          <path d="M126,112 Q137,120 148,113" class="robot__mouth"/>
+
+          <!-- neck -->
+          <rect x="150" y="148" width="20" height="14" class="robot__neck"/>
+
+          <!-- torso block -->
+          <polygon points="160,158 224,192 160,226 96,192" class="robot__top"/>
+          <polygon points="96,192 160,226 160,296 96,262" class="robot__left"/>
+          <polygon points="224,192 160,226 160,296 224,262" class="robot__right"/>
+
+          <!-- chest panel detail -->
+          <rect x="104" y="205" width="34" height="34" rx="4" class="robot__panel" transform="skewY(-14)"/>
+          <circle cx="176" cy="218" r="10" class="robot__accent-stroke"/>
+
+          <!-- left arm -->
+          <polygon points="96,192 96,232 76,244 76,204" class="robot__left"/>
+          <polygon points="76,204 96,192 116,204 96,216" class="robot__top"/>
+          <circle cx="86" cy="252" r="10" class="robot__joint"/>
+
+          <!-- right arm -->
+          <polygon points="224,192 224,232 244,244 244,204" class="robot__right"/>
+          <polygon points="224,192 204,204 224,216 244,204" class="robot__top"/>
+          <circle cx="234" cy="252" r="10" class="robot__joint"/>
+
+        </svg>
+
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
